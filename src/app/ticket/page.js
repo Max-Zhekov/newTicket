@@ -49,17 +49,21 @@ export default function Ticket() {
   const containerRef = useRef(null);
 
   const handleFullScreen = () => {
-    if (!containerRef.current) return;
-
-    if (!document.fullscreenElement) {
-      if (containerRef.current.requestFullscreen) {
-        containerRef.current.requestFullscreen();
-      } else if (containerRef.current.webkitRequestFullscreen) {
-        containerRef.current.webkitRequestFullscreen(); // Safari
-      } else if (containerRef.current.msRequestFullscreen) {
-        containerRef.current.msRequestFullscreen(); // IE/Edge
+    if (
+      !document.fullscreenElement &&
+      !document.webkitFullscreenElement &&
+      !document.msFullscreenElement
+    ) {
+      // Включаем fullscreen для всего документа
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen(); // Safari
+      } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen(); // IE/Edge
       }
     } else {
+      // Выходим из fullscreen
       if (document.exitFullscreen) {
         document.exitFullscreen();
       } else if (document.webkitExitFullscreen) {
