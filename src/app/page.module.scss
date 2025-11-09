@@ -66,3 +66,22 @@
     }
   }
 }
+
+.link {
+  text-align: center;
+  margin-top: 20px;
+  background-color: #005bb5;
+  padding: 10px;
+  border-radius: 8px;
+
+  & div {
+    font-size: 18px;
+    color: white;
+    font-family: sans-serif;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

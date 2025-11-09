@@ -6,6 +6,7 @@ import {
   decrement,
   setCarriageNumber,
 } from "@/store/slices/counterSlice";
+import Link from "next/link";
 
 export default function HomePage() {
   const counterValue = useSelector((state) => state.counter.counterValue);
@@ -28,7 +29,7 @@ export default function HomePage() {
         <h2 className={s.form__title}>Номер вагона</h2>
         <input
           type="number"
-          value={carriageNumber}
+          value={carriageNumber === 0 ? "" : carriageNumber}
           min="1"
           max="20"
           inputMode="numeric"
@@ -37,6 +38,9 @@ export default function HomePage() {
           onChange={(e) => dispatch(setCarriageNumber(Number(e.target.value)))}
         />
       </div>
+      <Link href="/ticket" className={s.link}>
+        <div>Перейти на страницу билета</div>
+      </Link>
     </main>
   );
 }
