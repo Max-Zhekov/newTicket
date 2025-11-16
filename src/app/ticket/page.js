@@ -5,8 +5,12 @@ import { useRef } from "react";
 import styles from "./page.module.scss";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setCarriageNumber } from "@/store/slices/counterSlice";
 
 export default function Ticket() {
+  const dispatch = useDispatch();
+
   const passengers = useSelector((state) => state.counter.counterValue);
   const carriageNumber = useSelector((state) => state.counter.carriageNumber);
 
@@ -38,6 +42,13 @@ export default function Ticket() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const saved = localStorage.getItem("carriageNumber");
+    if (saved) {
+      dispatch(setCarriageNumber(Number(saved)));
+    }
+  }, [dispatch]);
+
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
@@ -54,16 +65,14 @@ export default function Ticket() {
       !document.webkitFullscreenElement &&
       !document.msFullscreenElement
     ) {
-      // Включаем fullscreen для всего документа
       if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen();
       } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen(); // Safari
+        document.documentElement.webkitRequestFullscreen();
       } else if (document.documentElement.msRequestFullscreen) {
-        document.documentElement.msRequestFullscreen(); // IE/Edge
+        document.documentElement.msRequestFullscreen();
       }
     } else {
-      // Выходим из fullscreen
       if (document.exitFullscreen) {
         document.exitFullscreen();
       } else if (document.webkitExitFullscreen) {

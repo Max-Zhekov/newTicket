@@ -8,17 +8,15 @@ const counterSlice = createSlice({
   reducers: {
     increment: (state) => {
       state.counterValue += 1;
-      console.log(state.counterValue);
     },
     decrement: (state) => {
-      if (state.counterValue > 0) {
+      if (state.counterValue > 1) {
         state.counterValue -= 1;
-        console.log(state.counterValue);
       }
     },
     setCarriageNumber: (state, action) => {
       state.carriageNumber = action.payload;
-      console.log(state.carriageNumber);
+      localStorage.setItem("carriageNumber", action.payload);
     },
   },
 });
