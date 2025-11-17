@@ -13,6 +13,14 @@ export default function HomePage() {
   const carriageNumber = useSelector((state) => state.counter.carriageNumber);
   const dispatch = useDispatch();
 
+  function handleClick() {
+    let now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    const time = `${hours}:${minutes}`;
+    localStorage.setItem("time", time);
+  }
+
   return (
     <main className="container">
       <div className={s.counter}>
@@ -38,7 +46,7 @@ export default function HomePage() {
           onChange={(e) => dispatch(setCarriageNumber(Number(e.target.value)))}
         />
       </div>
-      <Link href="/ticket" className={s.link}>
+      <Link href="/ticket" className={s.link} onClick={handleClick}>
         <div>Перейти на страницу билета</div>
       </Link>
     </main>

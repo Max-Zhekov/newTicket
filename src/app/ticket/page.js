@@ -16,6 +16,7 @@ export default function Ticket() {
 
   const [ticketNumber, setTicketNumber] = useState(null);
   const [timeLeft, setTimeLeft] = useState(3600);
+  const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
     const randomNumber = () => {
@@ -25,6 +26,7 @@ export default function Ticket() {
       } while (number <= 100000000);
       return number;
     };
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTicketNumber(randomNumber());
   }, []);
 
@@ -48,6 +50,16 @@ export default function Ticket() {
       dispatch(setCarriageNumber(Number(saved)));
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedTime = localStorage.getItem("time");
+      if (savedTime) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setCurrentTime(savedTime);
+      }
+    }
+  }, []);
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
@@ -82,6 +94,15 @@ export default function Ticket() {
       }
     }
   };
+
+  function getTodayDay() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
+
+    return dd + "." + mm + "." + yyyy;
+  }
 
   return (
     <div className={`${styles.container} ${styles.layout}`}>
@@ -138,11 +159,11 @@ export default function Ticket() {
         <div className={styles.data}>
           <div>
             <p className={styles.dataText}>Дата</p>
-            <p className={styles.dataBottom}>09.11.2025</p>
+            <p className={styles.dataBottom}>{getTodayDay()}</p>
           </div>
           <div>
             <p className={styles.dataText}>Час</p>
-            <p className={styles.dataBottom}>19:45</p>
+            <p className={styles.dataBottom}>{currentTime}</p>
           </div>
           <div>
             <p className={styles.dataText}>Пасажири</p>
